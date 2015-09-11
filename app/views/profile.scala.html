@@ -1,0 +1,84 @@
+@import com.mohiva.play.silhouette.api.LoginInfo
+@import com.mohiva.play.silhouette.impl.providers.{CredentialsProvider,SocialProviderRegistry}
+
+@(loggedUser:User, loginInfo:LoginInfo, socialProviderRegistry:SocialProviderRegistry)(implicit request:RequestHeader,messages:Messages)
+
+@mergedIds = @{loggedUser.profiles.map(_.loginInfo.providerID)}
+
+@views.html.templates.mainApp(Messages("profile.title"), tab = "profile", loggedUser = Some(loggedUser), loginInfo=Some(loginInfo)) {
+  @request.flash.get("error").map { msg =>
+    @errors.alert(msg, "error")
+  }
+
+  @defining(loggedUser.profileFor(loginInfo).get) { profile =>
+    <div class="col-md-8 col-md-offset-2">
+      <div class="row">
+        <h3 class="col-md-8 text-primary">@Messages("profile.title")</h3>
+        @profile.avatarUrl.map { url => 
+          <div class="col-md-4 text-right">
+            <img class="avatar" style="margin-top:20px" src="@url"/>
+          </div> 
+        }
+        <hr class="col-md-12 small-margin-top"/>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <p class="col-md-6 strong">@Messages("profile.firstName")</p>
+            <p class="col-md-6">@profile.firstName.getOrElse("None")</p>
+          </div>
+          <div class="row">
+            <p class="col-md-6 strong">@Messages("profile.lastName")</p>
+            <p class="col-md-6">@profile.lastName.getOrElse("None")</p>
+          </div>
+          <div class="row">
+            <p class="col-md-6 strong">@Messages("profile.fullName")</p>
+            <p class="col-md-6">@loggedUser.fullName(loginInfo)</p>
+          </div>
+          <div class="row">
+            <p class="col-md-6 strong">@Messages("profile.email")</p>
+            <p class="col-md-6">@profile.email.getOrElse("None")</p>
+          </div>
+        </div>
+      </div>
+
+      @defining(loggedUser.profiles.filter(_.loginInfo.providerID != CredentialsProvider.ID)) { profiles => 
+        @if(profiles.nonEmpty) {
+          <div class="row">
+            <div class="col-md-12">
+              <h3 class="text-primary">@Messages("profile.merged")</h3>
+            </div>
+            <hr class="col-md-12 small-margin-top"/>
+          </div>
+        }
+        <div class="row">
+          <div class="col-md-12">
+            @profiles.map { p =>
+              <img title="@p.loginInfo.providerID" src="@routes.Assets.versioned(s"images/providers/${p.loginInfo.providerID}.png")"/>
+            }
+          </div>
+        </div>
+      }
+            
+      @defining(socialProviderRegistry.providers.filterNot(p => mergedIds.contains(p.id))) { providers => 
+        @if(providers.nonEmpty) {
+          <div class="row">
+            <div class="col-md-12">
+              <h3 class="text-primary">@Messages("profile.available")</h3>
+            </div>
+            <hr class="col-md-12 small-margin-top"/>
+          </div>
+        }
+        <div class="row">
+          <div class="col-md-12">
+            @providers.map { p =>
+              <a href="@routes.Auth.socialAuthenticate(p.id)" title="@p.id">
+                <img alt="@p.id" src="@routes.Assets.versioned(s"images/providers/${p.id}.png")"/>
+              </a>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+}

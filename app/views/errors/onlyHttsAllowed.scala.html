@@ -1,0 +1,12 @@
+@()(implicit request:RequestHeader, messages:Messages)
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>@Messages("error.onlyHttpsAllowed")</title>
+  </head>
+  <body>
+    <h2>@Messages("error.onlyHttpsAllowed")</h2>
+    @Html(Messages("error.onlyHttpsAllowedMsg", routes.Application.index().absoluteURL(true)))
+  </body>
+</html>

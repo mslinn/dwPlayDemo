@@ -1,0 +1,16 @@
+@import com.mohiva.play.silhouette.api.LoginInfo
+
+@(loggedUser: Option[User], loginInfo:Option[LoginInfo])(implicit messages:Messages)
+
+@views.html.templates.mainApp(Messages("app.title"), tab = "index", loggedUser = loggedUser, loginInfo=loginInfo) {
+  <h2 class="text-primary">@Messages("index.header")</h2>
+  <p class="lead">
+    @loggedUser.map { user =>
+      @Html(Messages("index.logged", user.fullName(loginInfo.get), routes.Application.profile)) <br/>
+      @Html(Messages("index.signOut", routes.Auth.signOut))
+    }.getOrElse {
+      @Html(Messages("index.notLogged", routes.Auth.signIn, routes.Auth.startSignUp)) <br/>
+      @Html(Messages("index.resetPassword", routes.Auth.startResetPassword))
+    }
+  </p>
+}

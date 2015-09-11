@@ -1,0 +1,42 @@
+@(signUpForm: Form[AuthForms.SignUpData])(implicit request: RequestHeader, messages:Messages)
+
+@implicitFieldConstructor = @{b3.horizontal.fieldConstructor("col-md-3","col-md-6")}
+
+@views.html.templates.mainAuth(Messages("signup.title"), tab = "signup") {
+  @request.flash.get("error").map { msg =>
+    @errors.alert(msg, "error")
+  }
+  @b3.form(routes.Auth.handleStartSignUp) {
+    <fieldset>
+      <legend>@Messages("signup.legend")</legend>
+      @helper.CSRF.formField
+      
+      @b3.email(signUpForm("email"), 
+        '_label -> Messages("signup.email"), 
+        'placeholder -> Messages("signup.email"), 
+        'autofocus -> true)
+      
+      @b3.text(signUpForm("firstName"), 
+        '_label -> Messages("signup.firstName"), 
+        'placeholder -> Messages("signup.firstName"))
+      
+      @b3.text(signUpForm("lastName"), 
+        '_label -> Messages("signup.lastName"), 
+        'placeholder -> Messages("signup.lastName"))
+      
+      @b3.password(signUpForm("password.password1"), 
+        '_label -> Messages("signup.password"), 
+        'placeholder -> Messages("signup.password"))
+      
+      @b3.password(signUpForm("password.password2"), 
+        '_label -> Messages("signup.verify"), 
+        'placeholder -> Messages("signup.password"),
+        '_error -> signUpForm.error("password"))
+      
+      @b3.submit('class -> "btn btn-primary"){ @Messages("signup.submit") }
+      <div class="post-form-opts">
+        <p>@Html(Messages("signup.postForm", routes.Auth.signIn))</p>
+      </div>
+    </fieldset>
+  }
+}

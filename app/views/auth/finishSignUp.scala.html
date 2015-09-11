@@ -1,0 +1,6 @@
+@(profile:Profile)(implicit messages:Messages)
+
+@templates.mainAuth(Messages("finishSignUp.title"), tab="signup") {
+  <p>@Messages("finishSignUp.thanks", profile.fullName.get)</p>
+  <p>@Messages("finishSignUp.instructions", profile.email.get)</p>
+}

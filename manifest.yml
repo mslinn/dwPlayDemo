@@ -1,0 +1,14 @@
+---
+applications:
+- name: dwPlayDemo
+  host: dwplaydemo
+  domain: mybluemix.net
+  memory: 512M
+  instances: 1
+  path: target/universal/dwdemo-1.0-SNAPSHOT.zip
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git
+  services:
+  - demodb
+  - mailer
+  env:
+    JAVA_OPTS: -Dconfig.resource=application.prod.conf
