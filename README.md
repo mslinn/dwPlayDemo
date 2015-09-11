@@ -13,5 +13,5 @@ and uses [MongoDB](https://www.mongodb.org/) for user storage. The application p
   * Anonymous or autenthicated access to home page.
   * Profile information for authenticated users.
 
-This application is [available in Bluemix](https:dwplaydemo.mybluemix.net).
+This application is [available in Bluemix](https://dwplaydemo.mybluemix.net).
 
