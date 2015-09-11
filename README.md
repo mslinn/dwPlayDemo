@@ -10,7 +10,7 @@ and uses [MongoDB](https://www.mongodb.org/) for user storage. The application p
   * Authentication using credentials (email + password).
   * Account linking: link your Twitter profile to your credentials profile.
   * OAuth1 Twitter authentication.
-  * Anonymous or autenthicated access to home page.
+  * Anonymous or authenticated access to home page.
   * Profile information for authenticated users.
 
 The code derives from the [play-multidomain-auth](https://github.com/adrianhurt/play-multidomain-auth)
