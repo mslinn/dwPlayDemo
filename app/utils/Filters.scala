@@ -12,6 +12,8 @@ import play.filters.csrf.CSRFFilter
 
 import controllers.routes
 
+// If we configure play.http.forwarded.trustedProxies correctly, we don't need this filter... right? right!?
+/*
 class TrustXForwardedFilter extends Filter {
   def apply(nextFilter:RequestHeader => Future[Result])(request:RequestHeader):Future[Result] = {
     val newRequest = request.headers.get("X-Forwarded-Proto").collect {
@@ -20,26 +22,27 @@ class TrustXForwardedFilter extends Filter {
     nextFilter(newRequest)
   }
 } 
+*/
 
 /**
- * This MUST be the last filter in the chain, otherwise we'd bypass CSRF.
+ * There's no way (that I know) to turn off http in Bluemix, hence this filter.
+ * Enable in production with application.httpsOnly=true.
  */
 class HttpsOnlyFilter @Inject() (val messagesApi:MessagesApi) extends Filter with I18nSupport {
   def apply(nextFilter:RequestHeader => Future[Result])(request:RequestHeader):Future[Result] = {
     implicit val r = request
     request.headers.get("X-Forwarded-Proto").collect {
       case "https" => nextFilter(request)
-    }.getOrElse(Future.successful(Ok(views.html.errors.onlyHttsAllowed())))
+    }.getOrElse(Future.successful(Ok(views.html.errors.onlyHttpsAllowed())))
   }
 }
 
 class Filters @Inject() (
     configuration:Configuration, 
     csrfFilter:CSRFFilter, 
-    trustXForwardedFilter:TrustXForwardedFilter, 
     httpsOnlyFilter:HttpsOnlyFilter) extends HttpFilters {
   
-  val map = Map("application.trustXForwarded" -> trustXForwardedFilter, "application.httpsOnly" -> httpsOnlyFilter)
+  val map = Map("application.httpsOnly" -> httpsOnlyFilter)
   override def filters = csrfFilter +: map.foldRight[Seq[EssentialFilter]](Seq.empty) { case ((k,f),filters) => 
     configuration.getBoolean(k) collect {
       case true => f +: filters
