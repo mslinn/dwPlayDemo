@@ -3,7 +3,7 @@
 
 @(loggedUser:User, loginInfo:LoginInfo, socialProviderRegistry:SocialProviderRegistry)(implicit request:RequestHeader,messages:Messages)
 
-@mergedIds = @{loggedUser.profiles.map(_.loginInfo.providerID)}
+@linkedIds = @{loggedUser.profiles.map(_.loginInfo.providerID)}
 
 @views.html.templates.mainApp(Messages("profile.title"), tab = "profile", loggedUser = Some(loggedUser), loginInfo=Some(loginInfo)) {
   @request.flash.get("error").map { msg =>
@@ -46,7 +46,7 @@
         @if(profiles.nonEmpty) {
           <div class="row">
             <div class="col-md-12">
-              <h3 class="text-primary">@Messages("profile.merged")</h3>
+              <h3 class="text-primary">@Messages("profile.linked")</h3>
             </div>
             <hr class="col-md-12 small-margin-top"/>
           </div>
@@ -60,7 +60,7 @@
         </div>
       }
             
-      @defining(socialProviderRegistry.providers.filterNot(p => mergedIds.contains(p.id))) { providers => 
+      @defining(socialProviderRegistry.providers.filterNot(p => linkedIds.contains(p.id))) { providers => 
         @if(providers.nonEmpty) {
           <div class="row">
             <div class="col-md-12">

@@ -20,7 +20,7 @@ profile.firstName=First name
 profile.lastName=Last name
 profile.fullName=Full name
 profile.email=Email
-profile.merged=Merged authentication providers
+profile.linked=Linked authentication providers
 profile.available=Available authentication providers
 
 signup.title=Sign up
