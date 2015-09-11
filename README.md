@@ -13,5 +13,17 @@ and uses [MongoDB](https://www.mongodb.org/) for user storage. The application p
   * Anonymous or autenthicated access to home page.
   * Profile information for authenticated users.
 
+The code derives from the [play-multidomain-auth](https://github.com/adrianhurt/play-multidomain-auth)
+and [play-silhouette-reactivemongo-seed](https://github.com/ezzahraoui/play-silhouette-reactivemongo-seed) 
+projects, with my following improvements:
+
+  * User model designed for account linking
+  * Account linking
+  * Dao unit testing
+  * Users that haven't completed the registration can't authenticate
+  * Csrf protection
+  * Setup for deployment to Bluemix or CloudFoundry
+  * Http disabled in production mode (only https allowed) 
+
 This application is [available in Bluemix](https://dwplaydemo.mybluemix.net).
 
