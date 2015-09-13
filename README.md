@@ -22,6 +22,7 @@ projects, with my following improvements:
   * Dao unit testing
   * Users that haven't completed the registration can't authenticate
   * Csrf protection
+  * Demo for secure Ajax call
   * Setup for deployment to Bluemix or CloudFoundry
   * Http disabled in production mode (only https allowed) 
 
