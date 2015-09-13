@@ -262,7 +262,8 @@ class Auth @Inject() (
     }).recover {
       case e:ProviderException => 
         logger.error("Provider error", e)
-        Redirect(routes.Application.profile()).flashing("error" -> Messages("error.notAuthenticated", providerId))
+        Redirect(request.identity.fold(routes.Auth.signIn())(_ => routes.Application.profile()))
+          .flashing("error" -> Messages("error.notAuthenticated", providerId))
     }
   }
 }
