@@ -25,19 +25,19 @@
         <div class="col-md-12">
           <div class="row">
             <p class="col-md-6 strong">@Messages("profile.firstName")</p>
-            <p class="col-md-6">@profile.firstName.getOrElse("None")</p>
+            <p class="col-md-6">@profile.firstName.getOrElse(Messages("profile.none"))</p>
           </div>
           <div class="row">
             <p class="col-md-6 strong">@Messages("profile.lastName")</p>
-            <p class="col-md-6">@profile.lastName.getOrElse("None")</p>
+            <p class="col-md-6">@profile.lastName.getOrElse(Messages("profile.none"))</p>
           </div>
           <div class="row">
             <p class="col-md-6 strong">@Messages("profile.fullName")</p>
-            <p class="col-md-6">@loggedUser.fullName(loginInfo)</p>
+            <p class="col-md-6">@loggedUser.fullName(loginInfo).getOrElse(Messages("profile.none"))</p>
           </div>
           <div class="row">
             <p class="col-md-6 strong">@Messages("profile.email")</p>
-            <p class="col-md-6">@profile.email.getOrElse("None")</p>
+            <p class="col-md-6">@profile.email.getOrElse(Messages("profile.none"))</p>
           </div>
         </div>
       </div>

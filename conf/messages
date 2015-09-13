@@ -8,12 +8,24 @@ navbar.username=Hello, {0}!
 navbar.signout=Sign Out
 navbar.signin=Sign In
 navbar.signup = Sign Up
+navbar.none=None
 
 index.header=Welcome to developerWorks Play Demo
 index.logged=Welcome <span class="text-success">{0}</span>, you are logged in. Go to <a href="{1}">My Profile</a> to see your profile info.
 index.signOut=You can also <a href="{0}">sign out</a>.
 index.notLogged=You aren''t logged in, you can <a href="{0}">sign in</a> or <a href="{1}">sign up</a> to create your account.
 index.resetPassword=If you forgot your password, you can <a href="{0}">reset</a> it.
+index.restProfile=You can also try getting your profile via an Ajax call. This will only succeed if you are authenticated to the application.
+index.fetchProfile=Fetch profile via Ajax
+index.none=None
+
+dialog.title=Your profile data
+dialog.email=Email
+dialog.firstName=First name
+dialog.lastName=Last name
+dialog.fullName=Full name
+dialog.available=Available authentication providers
+dialog.none=None
 
 profile.title=My profile
 profile.firstName=First name
@@ -22,6 +34,7 @@ profile.fullName=Full name
 profile.email=Email
 profile.linked=Linked authentication providers
 profile.available=Available authentication providers
+profile.none=None
 
 signup.title=Sign up
 signup.legend=Sign up for a new account
@@ -73,6 +86,8 @@ error.invalidCredentials=The supplied credentials are invalid
 error.notAuthenticated=The selected provider couldn''t authenticate you
 error.onlyHttpsAllowed=Only https allowed!
 error.onlyHttpsAllowedMsg=Only https access is allowed. Try <a href={0}>{0}</a>.
+error.profileError=Error getting profile data
+error.profileUnauth=Can't access profile information: must authenticate first.
 
 mail.welcome.subject=Welcome
 mail.welcome.hi=Hello, {0}!

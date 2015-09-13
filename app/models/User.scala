@@ -22,7 +22,7 @@ case class Profile(
 
 case class User(id: UUID, profiles: List[Profile]) extends Identity {
   def profileFor(loginInfo:LoginInfo) = profiles.find(_.loginInfo == loginInfo)
-  def fullName(loginInfo:LoginInfo) = profileFor(loginInfo).flatMap(_.fullName).getOrElse("None")
+  def fullName(loginInfo:LoginInfo) = profileFor(loginInfo).flatMap(_.fullName)
 }
 
 object User {

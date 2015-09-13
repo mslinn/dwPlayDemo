@@ -12,6 +12,12 @@ body {
   border-radius: 3px;
 }
 
+.small-avatar {
+  height: 20px;
+  border-radius: 3px;
+  margin-right: 8px;
+}
+
 .strong {
   font-weight: 700;
 }

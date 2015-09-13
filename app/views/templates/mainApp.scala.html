@@ -15,7 +15,7 @@
     @loggedUser.map { user =>
       @loginInfo.map { loginInfo =>
         <li><img class="avatar" src="@user.profileFor(loginInfo).flatMap(_.avatarUrl)"/></li>
-        <li class="navbar-text">@Messages("navbar.username", user.fullName(loginInfo))</li>
+        <li class="navbar-text">@Messages("navbar.username", user.fullName(loginInfo).getOrElse(Messages("navbar.none")))</li>
       }
       <li><a href="@routes.Auth.signOut">@Messages("navbar.signout")</a></li>
     }.getOrElse {

@@ -2,6 +2,9 @@
 GET     /                           controllers.Application.index
 GET     /profile                    controllers.Application.profile
 
+# Rest api
+GET      /rest/profile              controllers.RestApi.profile
+
 # Authentication
 GET     /auth/signup                controllers.Auth.startSignUp
 POST    /auth/signup                controllers.Auth.handleStartSignUp

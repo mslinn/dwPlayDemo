@@ -6,11 +6,59 @@
   <h2 class="text-primary">@Messages("index.header")</h2>
   <p class="lead">
     @loggedUser.map { user =>
-      @Html(Messages("index.logged", user.fullName(loginInfo.get), routes.Application.profile)) <br/>
+      @Html(Messages("index.logged", user.fullName(loginInfo.get).getOrElse(Messages("index.none")), routes.Application.profile)) <br/>
       @Html(Messages("index.signOut", routes.Auth.signOut))
     }.getOrElse {
       @Html(Messages("index.notLogged", routes.Auth.signIn, routes.Auth.startSignUp)) <br/>
       @Html(Messages("index.resetPassword", routes.Auth.startResetPassword))
     }
   </p>
+  <hr/>
+  <p class="lead">@Messages("index.restProfile")</p>
+  <button class="btn btn-default" onclick="fetchProfile()">@Messages("index.fetchProfile")</button>
 }
+
+@views.html.dialog()
+
+<script type="text/javascript">
+  function fetchProfile() {
+    $.ajax("@routes.RestApi.profile", {
+      accept: {json:"application/json"},
+      success: function(data) {
+        console.log(data)
+        showProfile(data)
+      },
+      statusCode: {
+        401: function(error) {
+          showError(error.responseJSON.error)
+        }
+      }
+    }).fail(function(error) {
+      if (error.status != 401) showError(error.responseJSON.error)
+    })
+  }
+
+  function showError(msg) {
+    $('#profileError :first-child').text(msg)
+    $("#profileData").hide()
+    $('#profileError').show()
+    $('#profileModal').modal()
+  }
+
+  function showProfile(data) {
+    var content = $('<dl class="dl-horizontal"></dl>')
+    content.append(
+      $('<dt>@Messages("dialog.firstName")</dt><dd>' + (data.firstName || '@Messages("dialog.none")') + '</dd>'), 
+      $('<dt>@Messages("dialog.lastName")</dt><dd>' + (data.lastName || '@Messages("dialog.none")') + '</dd>'),
+      $('<dt>@Messages("dialog.fullName")</dt><dd>' + (data.fullName || '@Messages("dialog.none")') + '</dd>'),
+      $('<dt>@Messages("dialog.email")</dt><dd>' + (data.email || '@Messages("dialog.none")') + '</dd>'))
+    $('#profileData').empty().append(content)
+
+    $('#profilePhoto').empty()
+    if ('avatarUrl' in data) $('#profilePhoto').append($('<img>',{src:data.avatarUrl, class:'small-avatar', style:'margin-top:0px'}))
+    
+    $("#profileError").hide()
+    $('#profileData').show()
+    $('#profileModal').modal()
+  }
+</script>
