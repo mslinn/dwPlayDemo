@@ -25,7 +25,6 @@
     $.ajax("@routes.RestApi.profile", {
       accept: {json:"application/json"},
       success: function(data) {
-        console.log(data)
         showProfile(data)
       },
       statusCode: {
@@ -34,7 +33,7 @@
         }
       }
     }).fail(function(error) {
-      if (error.status != 401) showError(error.responseJSON.error)
+      if (error.status != 401) showError('@Messages("error.profileError")')
     })
   }
 
