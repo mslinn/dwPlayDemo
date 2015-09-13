@@ -26,14 +26,15 @@ class TrustXForwardedFilter extends Filter {
 
 /**
  * There's no way (that I know) to turn off http in Bluemix, hence this filter.
- * Enable in production with application.httpsOnly=true.
+ * Enable in production with application.proxy.httpsOnly=true.
  */
 class HttpsOnlyFilter @Inject() (val messagesApi:MessagesApi) extends Filter with I18nSupport {
   def apply(nextFilter:RequestHeader => Future[Result])(request:RequestHeader):Future[Result] = {
     implicit val r = request
-    request.headers.get("X-Forwarded-Proto").collect {
+    request.headers.get("X-Forwarded-Proto").map {
       case "https" => nextFilter(request)
-    }.getOrElse(Future.successful(Ok(views.html.errors.onlyHttpsAllowed())))
+      case _ => Future.successful(Ok(views.html.errors.onlyHttpsAllowed()))
+    }.getOrElse(nextFilter(request))
   }
 }
 
@@ -42,7 +43,7 @@ class Filters @Inject() (
     csrfFilter:CSRFFilter, 
     httpsOnlyFilter:HttpsOnlyFilter) extends HttpFilters {
   
-  val map = Map("application.httpsOnly" -> httpsOnlyFilter)
+  val map = Map("application.proxy.httpsOnly" -> httpsOnlyFilter)
   override def filters = csrfFilter +: map.foldRight[Seq[EssentialFilter]](Seq.empty) { case ((k,f),filters) => 
     configuration.getBoolean(k) collect {
       case true => f +: filters
