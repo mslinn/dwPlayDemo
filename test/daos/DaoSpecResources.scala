@@ -15,32 +15,31 @@ import play.api.test.Helpers._
 
 import models.{User, Profile}
 
-
 trait DaoSpecResources {
     
   val timeout = DurationInt(10).seconds
   def fakeApp = FakeApplication(additionalConfiguration = Map("mongodb.uri" -> "mongodb://localhost:27017/test"))
 
-  def setupUser(userDao:UserDao, user:User) {
+  def setupUser(userDao:MongoUserDao, user:User) {
     Await.ready(userDao.users.drop(), timeout)
     Await.result(userDao.save(user).map(_ => ()), timeout)
   }
 
-  def withUserDao[T](t:UserDao => T):T = running(fakeApp) {
-    val userDao = new UserDao
+  def withUserDao[T](t:MongoUserDao => T):T = running(fakeApp) {
+    val userDao = new MongoUserDao
     Await.ready(userDao.users.drop(), timeout)
     t(userDao)
   }
 
   def withPasswordInfoDao[T](t:PasswordInfoDao => T):T = running(fakeApp) {
-    val userDao = new UserDao
+    val userDao = new MongoUserDao
     val passwordInfoDao = new PasswordInfoDao
     setupUser(userDao, cleanTestUser)
     t(passwordInfoDao)
   }
 
   def withOAuth1InfoDao[T](t:OAuth1InfoDao => T):T = running(fakeApp) {
-    val userDao = new UserDao
+    val userDao = new MongoUserDao
     val oauth1InfoDao = new OAuth1InfoDao
     setupUser(userDao, oauth1TestUser)
     t(oauth1InfoDao)
