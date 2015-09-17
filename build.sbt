@@ -44,3 +44,4 @@ scalacOptions ++= Seq(
   "-Ywarn-value-discard",
   "-language:reflectiveCalls"
 )
+

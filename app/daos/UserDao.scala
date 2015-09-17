@@ -17,7 +17,16 @@ import com.mohiva.play.silhouette.api.LoginInfo
 import models.{User,Profile}
 import models.User._
 
-class UserDao {
+trait UserDao {
+  def find(loginInfo:LoginInfo):Future[Option[User]]
+  def find(userId:UUID):Future[Option[User]]
+  def save(user:User):Future[User]
+  def confirm(loginInfo:LoginInfo):Future[User]
+  def link(user:User, profile:Profile):Future[User]
+  def update(profile:Profile):Future[User]
+}
+
+class MongoUserDao extends UserDao {
   lazy val reactiveMongoApi = current.injector.instanceOf[ReactiveMongoApi]
   val users = reactiveMongoApi.db.collection[JSONCollection]("users")
 
