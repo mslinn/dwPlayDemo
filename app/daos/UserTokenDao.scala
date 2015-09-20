@@ -14,7 +14,13 @@ import play.modules.reactivemongo.json.collection.JSONCollection
 
 import models.UserToken
 
-class UserTokenDao {
+trait UserTokenDao {
+  def find(id:UUID):Future[Option[UserToken]]
+  def save(token:UserToken):Future[UserToken]
+  def remove(id:UUID):Future[Unit]
+}
+
+class MongoUserTokenDao extends UserTokenDao {
   lazy val reactiveMongoApi = current.injector.instanceOf[ReactiveMongoApi]
   val tokens = reactiveMongoApi.db.collection[JSONCollection]("tokens")
 
@@ -29,4 +35,3 @@ class UserTokenDao {
     _ <- tokens.remove(Json.obj("id" -> id))
   } yield ()
 }
-

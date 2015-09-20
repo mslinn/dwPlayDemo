@@ -36,6 +36,7 @@ class Module extends AbstractModule with ScalaModule {
   def configure() {
     bind[IdentityService[User]].to[UserService]
     bind[UserDao].to[MongoUserDao]
+    bind[UserTokenDao].to[MongoUserTokenDao]
     bind[DelegableAuthInfoDAO[PasswordInfo]].to[PasswordInfoDao]
     bind[DelegableAuthInfoDAO[OAuth1Info]].to[OAuth1InfoDao]
     bind[IDGenerator].toInstance(new SecureRandomIDGenerator())

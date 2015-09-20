@@ -22,7 +22,7 @@ class UserTokenDaoSpec extends Specification {
   def fakeApp = FakeApplication(additionalConfiguration = Map("mongodb.uri" -> "mongodb://localhost:27017/test"))
 
   def withUserTokenDao[T](t:UserTokenDao => T):T = running(fakeApp) {
-    val userTokenDao = new UserTokenDao
+    val userTokenDao = new MongoUserTokenDao
     Await.ready(userTokenDao.tokens.drop(), timeout)
     t(userTokenDao)
   }
