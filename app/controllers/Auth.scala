@@ -258,7 +258,10 @@ class Auth @Inject() (
           result <- env.authenticatorService.embed(value, Redirect(routes.Application.index()))
         } yield result
       } 
-      case _ => Future.successful(Redirect(routes.Application.profile()).flashing("error" -> Messages("error.noProvider", providerId)))
+      case _ => Future.successful(
+        Redirect(request.identity.fold(routes.Auth.signIn())(_ => routes.Application.profile())).flashing(
+          "error" -> Messages("error.noProvider", providerId))
+      )
     }).recover {
       case e:ProviderException => 
         logger.error("Provider error", e)
