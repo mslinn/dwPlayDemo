@@ -14,7 +14,7 @@ and uses [MongoDB](https://www.mongodb.org/) for user storage. The application p
   * Profile information for authenticated users.
 
 Besides Silhouette, the code depends on the following Play-unrelated projects:
-  * [webjars-play](https://github.com/webjars/webjars-play), gives Plays access to [webjars](http://www.webjars.org/).
+  * [webjars-play](https://github.com/webjars/webjars-play), gives Play access to [webjars](http://www.webjars.org/).
   * [scala-guide](https://github.com/codingwell/scala-guice), Scala extensions for Google Guice.
   * [ficus](https://github.com/ceedubs/ficus), Scala-friendly access to Play configuration.
   * [play-bootstrap3](https://github.com/adrianhurt/play-bootstrap3), form helpers for Play and Boostrap 3.
