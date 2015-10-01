@@ -24,7 +24,7 @@ libraryDependencies ++= Seq(
   "net.ceedubs" %% "ficus" % "1.1.2",
   "com.adrianhurt" %% "play-bootstrap3" % "0.4.4-P24",
   "com.mohiva" %% "play-silhouette-testkit" % "3.0.0" % "test",
-  "org.reactivemongo" %% "play2-reactivemongo" % "0.11.5.play24",
+  "org.reactivemongo" %% "play2-reactivemongo" % "0.11.7.play24",
   specs2 % Test
 )
 
