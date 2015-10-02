@@ -13,16 +13,7 @@ and uses [MongoDB](https://www.mongodb.org/) for user storage. The application p
   * Anonymous or authenticated access to home page.
   * Profile information for authenticated users.
 
-Besides Silhouette, the code depends on the following projects not bundled with the Play distribution:
-  * [webjars-play](https://github.com/webjars/webjars-play), gives Play access to [webjars](http://www.webjars.org/).
-  * [scala-guice](https://github.com/codingwell/scala-guice), Scala extensions for Google Guice.
-  * [ficus](https://github.com/ceedubs/ficus), Scala-friendly access to Play configuration.
-  * [play-bootstrap3](https://github.com/adrianhurt/play-bootstrap3), form helpers for Play and Boostrap 3.
-  * [play-reactivemongo](https://github.com/ReactiveMongo/Play-ReactiveMongo), Play reactive driver for MongoDB.
-
-On the client side, the application uses [Bootstrap 3](http://getbootstrap.com/) and [JQuery](https://jquery.com/).
-
-The code is loosely based on the [play-multidomain-auth](https://github.com/adrianhurt/play-multidomain-auth) and 
+This project is inspired by the [play-multidomain-auth](https://github.com/adrianhurt/play-multidomain-auth) and 
 [play-silhouette-reactivemongo-seed](https://github.com/ezzahraoui/play-silhouette-reactivemongo-seed) projects, 
 with many improvements:
 
@@ -34,7 +25,5 @@ with many improvements:
   * Demo for secure Ajax call
   * Setup for deployment to Bluemix or CloudFoundry
   * HTTP disabled in production mode (only HTTPS allowed) 
-
-All the material is distributed under the Apache 2.0 license (see [LICENSE](./LICENSE)).
 
 This application is [available in Bluemix](https://dwplaydemo.mybluemix.net).
