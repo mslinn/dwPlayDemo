@@ -9,5 +9,6 @@ applications:
   buildpack: https://github.com/cloudfoundry/java-buildpack.git
   services:
   - mailer
+  - demodb
   env:
     JAVA_OPTS: -Dconfig.resource=application.prod.conf
